@@ -15,47 +15,30 @@ namespace MyLongHomeWork
         {
             Console.WriteLine("До какого числа считать ряд Фибоначчи?");
             int number = Convert.ToInt32(Console.ReadLine());
-            int FirstNumber = 0;
-            Console.Write("{0} ", FirstNumber);
-            int SecondNumber = 1;
-            Console.Write("{0} ", SecondNumber);
-            int summa = 0;
-            while (number >= summa)
+            Console.WriteLine($"Recursive: {CalculateRecursive(number)}");
+            Console.WriteLine($"Cycle: {Calculate(number)}");
+        }
+        static int CalculateRecursive(int n)
+        {
+            if (n == 0 || n == 1) return n;
+
+            return CalculateRecursive(n - 1) + CalculateRecursive(n - 2);
+        }
+
+        static int Calculate(int n)
+        {
+            int result = 0;
+            int b = 1;
+            int tmp;
+
+            for (int i = 0; i < n; i++)
             {
-                summa = FirstNumber + SecondNumber;
-
-                Console.Write("{0} ", summa);
-
-                FirstNumber = SecondNumber;
-                SecondNumber = summa;
+                tmp = result;
+                result = b;
+                b += tmp;
             }
-        }
-        static int Fib(int n, int p1 = 0, int p2 = 1)
-        {
-            if (n <= 1) return p1;
-            int p;
-            for (int j = 2; j < n; j++)
-            {
-                p = p1;
-                p1 = p2;
-                p2 = p2 + p;
-            }
-            return p2;
-        }
-        private static int[] Fi = new int[100];
-        private static void MainCheckRecurthion(string[] args)
-        {
-            Console.WriteLine(Fib(10));
-        }
 
-        private static int Fib(int n)
-        {
-            if (n <= 1) return n;
-
-            if (Fi[n] != 0) return Fi[n];
-
-            Fi[n] = Fib(n - 2) + Fib(n - 1);
-            return Fi[n];
+            return result;
         }
     }
 }
