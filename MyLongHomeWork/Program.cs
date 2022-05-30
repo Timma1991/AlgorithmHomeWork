@@ -11,6 +11,7 @@ namespace MyLongHomeWork
             {
                 new FirstTask();
                 new PointBenchmarksLesson();
+                new EmptyLesson4();
             }
             foreach (ConsoleInterface lesson in task)
                 Console.WriteLine($"Введите '{lesson.name}' для вызова задания {lesson.description}");
