@@ -10,6 +10,7 @@ namespace MyLongHomeWork
             IList<ConsoleInterface> task = new List<ConsoleInterface>();
             {
                 new FirstTask();
+                new PointBenchmarksLesson();
             }
             foreach (ConsoleInterface lesson in task)
                 Console.WriteLine($"Введите '{lesson.name}' для вызова задания {lesson.description}");
