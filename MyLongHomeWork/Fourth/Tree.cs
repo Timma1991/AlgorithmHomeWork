@@ -4,14 +4,14 @@
     {
         TreeNode root { get; set; }
 
-        
+
         public void AddItem(int value)
         {
             if (root == null)
             {
                 root = new TreeNode();
                 root.Value = value;
-                
+
                 return;
             }
             DoAdd(value, root);
@@ -74,6 +74,7 @@
                 }
                 return DoFindNodeByValue(value, node.RightChild);
             }
+
         }
 
         public TreeNode GetRoot()
@@ -174,10 +175,10 @@
                 }
                 DoRemoveItem(value, node.RightChild);
             }
-               
-            
-                
-            }
+
+
+
+        }
         public TreeNode BFS(int s)
         {
             Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -200,7 +201,7 @@
 
         }
 
-        public TreeNode DFS(int s, TreeNode node)
+        private TreeNode DFCRecursive(int s, TreeNode node)
         {
             Console.WriteLine($"Watching: {node.Value}");
             if (node == null)
@@ -213,7 +214,7 @@
             }
             if (node.LeftChild != null)
             {
-                var result = DFS(s, node.LeftChild);
+                var result = DFCRecursive(s, node.LeftChild);
                 if (result != null)
                 {
                     return result;
@@ -221,7 +222,7 @@
             }
             if (node.RightChild != null)
             {
-                var result = DFS(s, node.RightChild);
+                var result = DFCRecursive(s, node.RightChild);
                 if (result != null)
                 {
                     return result;
@@ -229,10 +230,15 @@
             }
             return null;
         }
+
+        public TreeNode DFS(int value)
+        {
+            return DFCRecursive(value, root);
+        }
     }
-    }
-    
-    
+}
+
+
 
 
 
