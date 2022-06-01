@@ -1,0 +1,185 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyLongHomeWork
+{
+    internal class TreeExample : ITree
+    {
+        TreeNode root { get; set; }
+        int elementsCount { get; set; }
+        public void AddItem(int value)
+        {
+            if(root == null)
+            {
+                root = new TreeNode();
+                root.Value = value;
+                elementsCount++;
+                return;
+            }
+            DoAdd(value, root);
+        }
+
+        private void DoAdd(int value, TreeNode node)
+        { 
+            if (node == null) throw new InvalidOperationException();
+            if (node.Value > value)
+            {
+                if (node.LeftChild == null)
+                {
+                    node.LeftChild = new TreeNode();
+                    node.LeftChild.Value = value;
+                    return;
+                }
+                DoAdd(value, node.LeftChild);
+            }
+            else
+            {
+                if(node.RightChild == null)
+                {
+                    node.RightChild = new TreeNode();
+                    node.RightChild.Value = value;
+                    return;
+                }
+                DoAdd(value, node.RightChild);
+            }
+        }
+
+        public TreeNode GetNodeByValue(int value)
+        {
+            return DoFindNodeByValue(value, root);
+        }
+
+        private TreeNode DoFindNodeByValue(int value, TreeNode node)
+        {
+            if(node == null)
+            {
+                throw new InvalidOperationException();
+            }
+            if(node.Value == value)
+            {
+                return node;
+            }
+            
+            if(node.Value > value)
+            {
+                if(node.LeftChild == null)
+                {
+                    return null;
+                }
+                return DoFindNodeByValue(value, node.LeftChild);
+            }
+            else
+            {
+                if (node.RightChild == null)
+                {
+                    return null;
+                }
+                return DoFindNodeByValue(value, node.RightChild);
+            }
+        }
+
+        public TreeNode GetRoot()
+        {
+            return root;
+        }
+
+        public void PrintTree()
+        {
+            if(root== null)
+            {
+                return;
+            }
+            int treeLength = GetLength(root);
+            double maxWidth = Math.Pow(2, treeLength - 1) * 3;
+            double initialX = maxWidth / 2;
+            DoPrintTree((int)initialX, 1, root);
+        }
+
+        private void DoPrintTree(int x, int y, TreeNode node)
+        {
+            Console.CursorLeft = x;
+            Console.CursorTop = y;
+            Console.Write(node.Value);
+            Console.CursorTop = ++y;
+            Console.CursorLeft -= 1;
+            Console.Write('/');
+            Console.CursorLeft += 1;
+            Console.Write('\\');
+            Console.CursorTop = ++y;
+
+            if(node.LeftChild != null)
+                DoPrintTree(x-2, y, node.LeftChild);
+            if(node.RightChild != null)
+                DoPrintTree(x+2,y, node.RightChild);
+        }
+
+        private int GetLength(TreeNode node, int counter = 0)
+        {
+            if(node == null)
+            {
+                return counter;
+            }
+            if(node.LeftChild == null && node.RightChild == null)
+            {
+                return counter + 1;
+            }
+            if(node.LeftChild == null)
+            {
+                return GetLength(node.RightChild, counter + 1);
+            }
+            if(node.RightChild == null)
+            {
+                return GetLength(node.LeftChild, counter + 1);
+            }
+            return Math.Max(GetLength(node.LeftChild, counter + 1), GetLength(node.RightChild, counter + 1));
+        }
+
+        public void RemoveItem(int value)
+        {
+            DoRemoveItem(value, root);
+        }
+
+        private void DoRemoveItem(int value, TreeNode node)
+        {
+            if(node == null)
+            {
+                throw new InvalidOperationException();
+            }
+            if(node.Value == value && node == root)
+            {
+                root = null;
+                return;
+            }
+            if(node.Value > value)
+            {
+                if(node.LeftChild == null)
+                {
+                    return;
+                }
+                if(node.LeftChild.Value == value)
+                {
+                    node.LeftChild = null;
+                    return;
+                }
+                DoRemoveItem(value, node.LeftChild);
+            }
+            else
+            {
+                if (node.RightChild == null)
+                {
+                    return;
+                }
+                if (node.RightChild.Value == value)
+                {
+                    node.RightChild = null;
+                    return;
+                }
+                DoRemoveItem(value, node.RightChild);
+            }
+        }
+    }
+
+}
