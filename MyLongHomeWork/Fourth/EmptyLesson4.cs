@@ -8,13 +8,15 @@
 
         public void Run()
         {
-            ITree tree = new Tree();
+            Tree tree = new Tree();
             Random random = new Random();
             for (int i = 0; i < 5; i++)
             {
                 tree.AddItem(random.Next(0, 10));
             }
             tree.PrintTree();
+            tree.BFS(10);
+            tree.DFS(10);
         }
     }
 }
